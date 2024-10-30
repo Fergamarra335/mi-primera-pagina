@@ -1,0 +1,102 @@
+<h2>Calculadora de IMC</h2>
+<p>Introduce tu peso y altura para calcular tu Índice de Masa Corporal:</p>
+
+<label for="peso">Peso (kg):</label>
+<input type="number" id="peso" placeholder="Ej. 70"><br><br>
+
+<label for="altura">Altura (m):</label>
+<input type="number" id="altura" step="0.01" placeholder="Ej. 1.75"><br><br>
+
+<button onclick="calcularIMC()">Calcular IMC</button>
+
+<p id="resultadoIMC"></p>
+
+<script>
+function calcularIMC() {
+    var peso = document.getElementById('peso').value;
+    var altura = document.getElementById('altura').value;
+    if (peso > 0 && altura > 0) {
+        var imc = peso / (altura * altura);
+        document.getElementById('resultadoIMC').innerHTML = 'Tu IMC es: ' + imc.toFixed(2);
+    } else {
+        document.getElementById('resultadoIMC').innerHTML = 'Por favor, introduce valores válidos.';
+    }
+}
+</script>
+
+
+<h2>Calculadora de Calorías Diarias</h2>
+<p>Introduce tus datos para calcular las calorías que necesitas consumir diariamente:</p>
+
+<label for="edad">Edad:</label>
+<input type="number" id="edad" placeholder="Ej. 25"><br><br>
+
+<label for="pesoCalorias">Peso (kg):</label>
+<input type="number" id="pesoCalorias" placeholder="Ej. 70"><br><br>
+
+<label for="alturaCalorias">Altura (cm):</label>
+<input type="number" id="alturaCalorias" placeholder="Ej. 175"><br><br>
+
+<label for="genero">Género:</label>
+<select id="genero">
+  <option value="hombre">Hombre</option>
+  <option value="mujer">Mujer</option>
+</select><br><br>
+
+<label for="actividad">Nivel de actividad física:</label>
+<select id="actividad">
+  <option value="sedentario">Sedentario (poco o ningún ejercicio)</option>
+  <option value="ligero">Ligero (ejercicio ligero 1-3 días/semana)</option>
+  <option value="moderado">Moderado (ejercicio moderado 3-5 días/semana)</option>
+  <option value="intenso">Intenso (ejercicio intenso 6-7 días/semana)</option>
+  <option value="muyIntenso">Muy intenso (entrenamientos 2 veces al día)</option>
+</select><br><br>
+
+<button onclick="calcularCalorias()">Calcular Calorías</button>
+
+<p id="resultadoCalorias"></p>
+
+<script>
+function calcularCalorias() {
+    var edad = document.getElementById('edad').value;
+    var peso = document.getElementById('pesoCalorias').value;
+    var altura = document.getElementById('alturaCalorias').value;
+    var genero = document.getElementById('genero').value;
+    var actividad = document.getElementById('actividad').value;
+    
+    if (edad > 0 && peso > 0 && altura > 0) {
+        var bmr;
+        
+        // Fórmula Harris-Benedict
+        if (genero === 'hombre') {
+            bmr = 88.36 + (13.4 * peso) + (4.8 * altura) - (5.7 * edad);
+        } else {
+            bmr = 447.6 + (9.2 * peso) + (3.1 * altura) - (4.3 * edad);
+        }
+        
+        var factorActividad;
+        switch (actividad) {
+            case 'sedentario':
+                factorActividad = 1.2;
+                break;
+            case 'ligero':
+                factorActividad = 1.375;
+                break;
+            case 'moderado':
+                factorActividad = 1.55;
+                break;
+            case 'intenso':
+                factorActividad = 1.725;
+                break;
+            case 'muyIntenso':
+                factorActividad = 1.9;
+                break;
+        }
+        
+        var calorias = bmr * factorActividad;
+        document.getElementById('resultadoCalorias').innerHTML = 'Necesitas aproximadamente ' + calorias.toFixed(0) + ' calorías al día.';
+    } else {
+        document.getElementById('resultadoCalorias').innerHTML = 'Por favor, introduce valores válidos.';
+    }
+}
+</script>

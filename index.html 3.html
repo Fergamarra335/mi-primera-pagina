@@ -1,0 +1,119 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rutinas de Entreno</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            background-color: #24272e;
+            color: #ffffff;
+            padding: 20px;
+        }
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            background: black;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            color: #f56349;
+        }
+        h3, ul, li, p {
+            color: black;
+        }
+        button {
+            background-color: #f56349;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            cursor: pointer;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+        button:hover {
+            background-color: #f56349;
+        }
+        .result {
+            margin-top: 20px;
+            padding: 10px;
+            background-color: #eaf8fc;
+            border-left: 5px solid #f56349;
+        }
+        a {
+            padding: 8px;
+           font-size: 25px;
+           color: #ffffff;
+           margin: 10px 0;
+           background: linear-gradient(
+           90deg,
+           rgba(245,99,72,1) 0%,
+           rgba(254,140,32,1) 100%
+           );
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>Rutinas de Entreno</h1>
+    <p>Selecciona tu objetivo:</p>
+    <select id="goal">
+        <option value="">--Selecciona un objetivo--</option>
+        <option value="bajar_peso">Bajar de peso (definicion)</option>
+        <option value="aumentar_masa">Aumentar masa muscular (volumen)</option>
+        <option value="mejorar_resistencia">Mejorar resistencia</option>
+    </select>
+    <button onclick="calculate()">Calcular</button>
+
+    <div class="result" id="result"></div>
+</div>
+
+<script>
+    function calculate() {
+        const goal = document.getElementById("goal").value;
+        let resultText = '';
+
+        switch (goal) {
+            case 'bajar_peso':
+                resultText = '<h3>Recomendaciones para bajar de peso:</h3>' +
+                             '<ul>' +
+                             '<li>Ejercicios cardiovasculares: correr, nadar, andar en bicicleta.</li>' +
+                             '<li>Entrenamiento de alta intensidad (HIIT): 2-3 veces por semana.</li>' +
+                             '<li>Entrenamiento de fuerza: 2-3 veces por semana, enfocándose en ejercicios compuestos.</li>' +
+                             '</ul>';
+                break;
+            case 'aumentar_masa':
+                resultText = '<h3>Recomendaciones para aumentar masa muscular:</h3>' +
+                             '<ul>' +
+                             '<li>Entrenamiento de fuerza: 4-5 veces por semana.</li>' +
+                             '<li>Ejercicios compuestos: sentadillas, press de banca, peso muerto.</li>' +
+                             '<li>Enfocarse en un rango de repeticiones de 6-12.</li>' +
+                             '</ul>';
+                break;
+            case 'mejorar_resistencia':
+                resultText = '<h3>Recomendaciones para mejorar resistencia:</h3>' +
+                             '<ul>' +
+                             '<li>Ejercicios cardiovasculares: correr, ciclismo, natación.</li>' +
+                             '<li>Entrenamiento en circuito: combinar diferentes ejercicios en series.</li>' +
+                             '<li>Sesiones de entrenamiento prolongadas: de 30 a 60 minutos, 3-5 veces por semana.</li>' +
+                             '</ul>';
+                break;
+            default:
+                resultText = '<p>Por favor, selecciona un objetivo.</p>';
+                break;
+        }
+
+        document.getElementById("result").innerHTML = resultText;
+    }
+</script>
+<a href="file:///C:/Users/DIGINUBE/Documents/Pagina%20responsive/index.html%204.html" class="btn-1">Quieres crear tu propia rutina según tus objetivos</a>
+</body>
+</html>
+
+

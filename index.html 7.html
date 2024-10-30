@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculadora de Nutrición</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #24272E;
+            color: #ffffff;
+            padding: 20px;
+        }
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            background: black;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        h1, h2 {
+            color: #f56349;
+        }
+        .input-group {
+            margin-bottom: 15px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+        }
+        input, select, button {
+            width: 100%;
+            padding: 8px;
+            margin-top: 5px;
+        }
+        .results {
+            margin-top: 20px;
+            padding: 10px;
+            background-color: #24272E;
+            border: 1px solid #f56349;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>Calculadora de Nutrición</h1>
+    <p>Introduce tus datos para conocer tus necesidades diarias de calorías, proteínas, carbohidratos, grasas y agua según tu objetivo.</p>
+
+    <div class="input-group">
+        <label for="weight">Peso (kg):</label>
+        <input type="number" id="weight" required>
+    </div>
+    <div class="input-group">
+        <label for="height">Altura (cm):</label>
+        <input type="number" id="height" required>
+    </div>
+    <div class="input-group">
+        <label for="age">Edad:</label>
+        <input type="number" id="age" required>
+    </div>
+    <div class="input-group">
+        <label for="gender">Género:</label>
+        <select id="gender" required>
+            <option value="male">Masculino</option>
+            <option value="female">Femenino</option>
+        </select>
+    </div>
+    <div class="input-group">
+        <label for="activity">Nivel de actividad física:</label>
+        <select id="activity" required>
+            <option value="1.2">Sedentario</option>
+            <option value="1.375">Ligero (ejercicio ligero 1-3 veces por semana)</option>
+            <option value="1.55">Moderado (ejercicio moderado 3-5 veces por semana)</option>
+            <option value="1.725">Activo (ejercicio intenso 6-7 veces por semana)</option>
+            <option value="1.9">Muy activo (ejercicio intenso diario o trabajo físico)</option>
+        </select>
+    </div>
+    <div class="input-group">
+        <label for="goal">Objetivo:</label>
+        <select id="goal" required>
+            <option value="lose">Bajar de peso</option>
+            <option value="gain">Aumentar masa muscular</option>
+            <option value="maintain">Mejorar la resistencia</option>
+        </select>
+    </div>
+
+    <button onclick="calculate()">Calcular</button>
+
+    <div id="results" class="results" style="display: none;">
+        <h2>Resultados</h2>
+        <p>Calorías diarias: <span id="calories"></span> kcal</p>
+        <p>Proteínas diarias: <span id="protein"></span> g</p>
+        <p>Carbohidratos diarios: <span id="carbs"></span> g</p>
+        <p>Grasas diarias: <span id="fats"></span> g</p>
+        <p>Agua diaria: <span id="water"></span> litros</p>
+    </div>
+</div>
+
+<script>
+    function calculate() {
+        const weight = parseFloat(document.getElementById('weight').value);
+        const height = parseFloat(document.getElementById('height').value);
+        const age = parseInt(document.getElementById('age').value);
+        const gender = document.getElementById('gender').value;
+        const activity = parseFloat(document.getElementById('activity').value);
+        const goal = document.getElementById('goal').value;
+
+        // Fórmula Harris-Benedict para calcular TMB (Tasa Metabólica Basal)
+        let bmr;
+        if (gender === "male") {
+            bmr = 88.362 + (13.397 * weight) + (4.799 * height) - (5.677 * age);
+        } else {
+            bmr = 447.593 + (9.247 * weight) + (3.098 * height) - (4.330 * age);
+        }
+
+        // Calorías según actividad
+        let calories = bmr * activity;
+
+        // Ajuste según el objetivo
+        if (goal === "lose") {
+            calories *= 0.8; // Déficit calórico del 20% para bajar de peso
+        } else if (goal === "gain") {
+            calories *= 1.2; // Exceso calórico del 20% para ganar músculo
+        }
+
+        // Macronutrientes según el objetivo
+        let protein = weight * (goal === "gain" ? 2 : 1.6); // Mayor proteína para ganar músculo
+        let carbs = calories * (goal === "maintain" ? 0.5 : goal === "gain" ? 0.55 : 0.45) / 4;
+        let fats = calories * (goal === "maintain" ? 0.3 : goal === "gain" ? 0.25 : 0.2) / 9;
+        let water = weight * 0.035; // Recomendación diaria de agua: 35 ml por kg de peso
+
+        // Mostrar resultados
+        document.getElementById('calories').textContent = calories.toFixed(0);
+        document.getElementById('protein').textContent = protein.toFixed(0);
+        document.getElementById('carbs').textContent = carbs.toFixed(0);
+        document.getElementById('fats').textContent = fats.toFixed(0);
+        document.getElementById('water').textContent = water.toFixed(2);
+        document.getElementById('results').style.display = 'block';
+    }
+</script>
+
+</body>
+</html>
